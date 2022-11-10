@@ -37,3 +37,4 @@ mykernel.iso: mykernel.bin
 run: mykernel.iso
 		# (killall VBoxManage && sleep 1) || true 
 		VBoxManage startvm "My Operating System"
+
