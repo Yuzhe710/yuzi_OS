@@ -13,7 +13,7 @@
 .global loader
 
 loader:
-    mov $kernel_stack, %esp
+    mov $kernel_stack, %esp  #move address of kernel_stack to esp
     call callConstructors
     push %eax
     push %ebx

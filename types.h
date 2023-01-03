@@ -1,6 +1,8 @@
 #ifndef __TYPES_H
 #define __TYPES_H
 
+// Make the type byte precise. Very important when communicating with hardware
+
     typedef char int8_t;
     typedef unsigned char uint8_t;
 

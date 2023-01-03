@@ -1,9 +1,9 @@
 
-GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-leading-underscore #for the 32 bit mode, compile with 32 bit gcc
+GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore #for the 32 bit mode, compile with 32 bit gcc
 ASPARAMS = --32 
 LDPARAMS = -melf_i386
 
-objects = loader.o kernel.o
+objects = loader.o gdt.o port.o kernel.o
 
 # the output is the target file, which is %.o, $< means the first prerequisite
 # which is %.cpp
@@ -38,3 +38,6 @@ run: mykernel.iso
 		# (killall VBoxManage && sleep 1) || true 
 		VBoxManage startvm "My Operating System"
 
+.PHONY:clean
+clean:
+		rm -f $(objects) mykernel.bin mykernel.iso
