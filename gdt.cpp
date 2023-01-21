@@ -7,8 +7,8 @@ codeSegmentSelector(0,64*1024*1024,0x9A), // not too understand the 2nd paramete
 dataSegmentSelector(0,64*1024*1024,0x92)
 {
     uint32_t i[2];
-    i[0] = (uint32_t)this; // this is a pointer to the gdt, namely the address
-    i[1] = sizeof(GlobalDescriptorTable) << 16; // not too sure why shift by 2 bytes
+    i[1] = (uint32_t)this; // this is a pointer to the gdt, namely the address
+    i[0] = sizeof(GlobalDescriptorTable) << 16; // not too sure why shift by 2 bytes
 
     asm volatile("lgdt (%0)": :"p" (((uint8_t*) i)+2)); // the address of i is denoted by uint8 - load the gdt
 
