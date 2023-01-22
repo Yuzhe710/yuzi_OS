@@ -62,7 +62,7 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
 
     // Activate hardware
 
-    KeyboardDriver keyboard(&interrupts);
+    // KeyboardDriver keyboard(&interrupts);
 
 
     interrupts.Activate();
