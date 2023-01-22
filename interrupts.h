@@ -52,6 +52,7 @@
         ~InterruptManager();
 
         void Activate();
+        void Deactivate();
 
         static uint32_t HandleInterrupt(uint8_t interruptNumber, uint32_t esp); // current stack pointer
         uint32_t DoHandleInterrupt(uint8_t interruptNumber, uint32_t esp);
