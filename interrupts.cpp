@@ -120,9 +120,9 @@ uint32_t InterruptManager::DoHandleInterrupt(uint8_t interruptNumber, uint32_t e
     {
         // print unhandled interrupt number
         char* foo = "UNHANDLED INTERRUPT 0x00";
-        char* hex = "0123456789ACDEF";
-        foo[22] = hex[(interruptNumber >> 4) & 0x0F];
-        foo[23] = hex[interruptNumber & 0x0F];
+        char* hex = "0123456789ABCDEF";
+        foo[22] = hex[(interruptNumber >> 4) & 0xF];
+        foo[23] = hex[interruptNumber & 0xF];
         printf(foo);
     }
 
