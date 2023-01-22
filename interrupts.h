@@ -10,6 +10,9 @@
     {
 
     protected:
+
+        static InterruptManager* ActiveInterruptManager; // a pointer
+
         struct GateDescriptor
         {
             /* data */
@@ -51,6 +54,7 @@
         void Activate();
 
         static uint32_t HandleInterrupt(uint8_t interruptNumber, uint32_t esp); // current stack pointer
+        uint32_t DoHandleInterrupt(uint8_t interruptNumber, uint32_t esp);
 
         static void IgnoreInterruptRequest();
         //static void InterruptIgnore();
