@@ -6,12 +6,30 @@
 #include "port.h"
 #include "gdt.h"
 
+    class InterruptManager;
+
+    class InterruptHandler
+    {
+    protected:
+        uint8_t interruptNumber; // with a specific interrupt numnber
+        InterruptManager* interruptManager;
+
+        InterruptHandler(uint8_t interruptNumber, InterruptManager* InterruptManager);
+        ~InterruptHandler();
+    public:
+        uint32_t HandleInterrupt(uint32_t esp);
+    };
+
     class InterruptManager
     {
+    // by this friend class, makes it possible for InterruptManager class to access all members (private and public) of InterrruptHandler class as if it were a member of that class . 
+    // But InterruptHandler class can't access members of InterruptManager class
+    friend class InterruptHandler;
 
     protected:
 
         static InterruptManager* ActiveInterruptManager; // a pointer
+        InterruptHandler* handlers[256];
 
         struct GateDescriptor
         {
