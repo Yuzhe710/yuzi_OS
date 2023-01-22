@@ -166,7 +166,7 @@ uint32_t InterruptManager::DoHandleInterrupt(uint8_t interruptNumber, uint32_t e
     {
         esp = handlers[interruptNumber]->HandleInterrupt(esp);
     }
-    else if (interruptNumber != hardwareInterruptOffset) // the timer interrupt is 0x20
+    else if (interruptNumber != 0x20) // the timer interrupt is 0x20
     {
         // print unhandled interrupt number
         char* foo = "UNHANDLED INTERRUPT 0x00";
