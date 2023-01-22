@@ -91,7 +91,10 @@ uint32_t InterruptManager::HandleInterrupt(uint8_t interruptNumber, uint32_t esp
 
 uint32_t InterruptManager::DoHandleInterrupt(uint8_t interruptNumber, uint32_t esp)
 {
-    printf("INTERRUPT");
+    if (interruptNumber != 0x20) // the timer interrupt
+    {
+        printf("INTERRUPT");
+    }
 
     if (0x20 <= interruptNumber && interruptNumber < 0x30) 
     {
