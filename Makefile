@@ -1,5 +1,5 @@
 
-GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore #for the 32 bit mode, compile with 32 bit gcc
+GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore -Wno-write-strings #for the 32 bit mode, compile with 32 bit gcc
 ASPARAMS = --32 
 LDPARAMS = -melf_i386
 
