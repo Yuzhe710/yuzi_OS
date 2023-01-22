@@ -58,18 +58,18 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
     printf("Hello World!");
     
     GlobalDescriptorTable gdt;
-    // InterruptManager interrupts(&gdt);
-
-    // // Activate hardware
-
-    // KeyboardDriver keyboard(&interrupts);
-
-
-    // interrupts.Activate();
-
     InterruptManager interrupts(0x20, &gdt);
+
+    // Activate hardware
+
     KeyboardDriver keyboard(&interrupts);
+
+
     interrupts.Activate();
+
+    // InterruptManager interrupts(0x20, &gdt);
+    // KeyboardDriver keyboard(&interrupts);
+    // interrupts.Activate();
 
     while (1);
 }
