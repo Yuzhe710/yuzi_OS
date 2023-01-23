@@ -52,7 +52,8 @@ uint32_t KeyboardDriver::HandleInterrupt(uint32_t esp)
     {
         switch (key)
         {
-            case 0x02: handler->OnKeyDown('1'); break;
+            //case 0x02: handler->OnKeyDown('1'); break;
+            case 0x02: printf("1"); break;
             case 0x03: handler->OnKeyDown('2'); break;
             case 0x04: handler->OnKeyDown('3'); break;
             case 0x05: handler->OnKeyDown('4'); break;
