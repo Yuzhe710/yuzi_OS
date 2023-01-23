@@ -40,7 +40,7 @@ void KeyboardDriver::Activate()
 }
 
 void printf(char*);
-void printHex(uint8_t);
+void printfHex(uint8_t);
 
 uint32_t KeyboardDriver::HandleInterrupt(uint32_t esp)
 {
@@ -102,7 +102,7 @@ uint32_t KeyboardDriver::HandleInterrupt(uint32_t esp)
             default:
             {
                 printf("KEYBOARD 0x");
-                printHex(key);
+                printfHex(key);
                 break;
             }
         }
