@@ -24,7 +24,8 @@ KeyboardDriver::~KeyboardDriver()
 {
 }
 
-
+void printf(char*);
+void printfHex(uint8_t);
 
 void KeyboardDriver::Activate()
 {
@@ -39,8 +40,6 @@ void KeyboardDriver::Activate()
     dataport.Write(0xf4);
 }
 
-void printf(char*);
-void printfHex(uint8_t);
 
 uint32_t KeyboardDriver::HandleInterrupt(uint32_t esp)
 {
