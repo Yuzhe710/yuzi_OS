@@ -131,18 +131,18 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
     //MouseDriver mouse(&interrupts);
     //drvManager.AddDriver(&mouse);
 
-    PrintfKeyboardEventHandler kbhandler;
-    KeyboardDriver keyboard(&interrupts, &kbhandler);
-    drvManager.AddDriver(&keyboard);
+        PrintfKeyboardEventHandler kbhandler;
+        KeyboardDriver keyboard(&interrupts, &kbhandler);
+        drvManager.AddDriver(&keyboard);
 
-    MouseToConsole mousehandler;
-    MouseDriver mouse(&interrupts, &mousehandler);
-    drvManager.AddDriver(&mouse);
+        MouseToConsole mousehandler;
+        MouseDriver mouse(&interrupts, &mousehandler);
+        drvManager.AddDriver(&mouse);
 
-    printf("Initializing Hardware, Stage 2");
-    drvManager.ActivateAll();
+    printf("Initializing Hardware, Stage 2\n");
+        drvManager.ActivateAll();
 
-    printf("Initializing Hardware, Stage 3");
+    printf("Initializing Hardware, Stage 3\n");
     interrupts.Activate();
 
     // InterruptManager interrupts(0x20, &gdt);
