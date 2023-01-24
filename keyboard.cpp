@@ -1,5 +1,8 @@
 #include "keyboard.h"
 
+void printf(char*);
+void printfHex(uint8_t);
+
 KeyboardEventHandler::KeyboardEventHandler()
 {
 }
@@ -25,8 +28,6 @@ KeyboardDriver::~KeyboardDriver()
 {
 }
 
-void printf(char*);
-void printfHex(uint8_t);
 
 void KeyboardDriver::Activate()
 {
