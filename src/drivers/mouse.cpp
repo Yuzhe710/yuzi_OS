@@ -1,4 +1,9 @@
-#include "mouse.h"
+#include <drivers/mouse.h>
+
+using namespace yuzi_os::common;
+using namespace yuzi_os::drivers;
+using namespace yuzi_os::hardwarecommunication;
+
 void printf(char*);
 
     MouseEventHandler::MouseEventHandler()

@@ -1,4 +1,7 @@
-#include "gdt.h"
+#include <gdt.h>
+
+using namespace yuzi_os;
+using namespace yuzi_os::common;
 
 GlobalDescriptorTable::GlobalDescriptorTable()
 :nullSegmentSelector(0,0,0),

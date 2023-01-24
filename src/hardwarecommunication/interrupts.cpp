@@ -1,5 +1,8 @@
 
-#include "interrupts.h"
+#include <hardwarecommunication/interrupts.h>
+using namespace yuzi_os::common;
+using namespace yuzi_os::hardwarecommunication;
+
 
 void printf(char* str);
 void printfHex(uint8_t);
@@ -7,7 +10,7 @@ void printfHex(uint8_t);
 InterruptHandler::InterruptHandler(uint8_t interruptNumber, InterruptManager* interruptManager)
 {
     this->interruptNumber = interruptNumber;
-    this->interruptManager = interruptManager;
+    this->interruptManager  = interruptManager;
     interruptManager->handlers[interruptNumber] = this;
 }
 

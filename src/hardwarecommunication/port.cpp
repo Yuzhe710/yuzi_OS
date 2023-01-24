@@ -1,4 +1,7 @@
-#include "port.h"
+#include <hardwarecommunication/port.h>
+using namespace yuzi_os::common;
+using namespace yuzi_os::hardwarecommunication;
+
 
 Port::Port(uint16_t portnumber)
 {
