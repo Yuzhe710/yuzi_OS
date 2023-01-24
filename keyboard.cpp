@@ -9,7 +9,6 @@ KeyboardEventHandler::KeyboardEventHandler()
 
 void KeyboardEventHandler::OnKeyDown(char)
 {
-    printf("kk");
 }
 
 void KeyboardEventHandler::OnKeyUp(char)

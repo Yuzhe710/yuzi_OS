@@ -54,6 +54,11 @@ void printfHex(uint8_t key)
 class PrintfKeyboardEventHandler : public KeyboardEventHandler
 {
 public:
+    PrintfKeyboardEventHandler()
+    {
+        printf("kkkk");
+    }
+
     void OnkeyDown(char c)
     {
         char* foo = " ";
@@ -61,6 +66,7 @@ public:
         printf(foo);
     }
 };
+
 
 class MouseToConsole : public MouseEventHandler
 {
