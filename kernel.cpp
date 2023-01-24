@@ -59,7 +59,7 @@ public:
         printf("kkkk");
     }
 
-    void OnkeyDown(char c)
+    void OnKeyDown(char c)
     {
         char* foo = " ";
         foo[0] = c;
