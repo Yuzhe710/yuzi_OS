@@ -5,6 +5,7 @@
 #include <drivers/driver.h>
 #include <drivers/keyboard.h>
 #include <drivers/mouse.h>
+#include <drivers/vga.h>
 
 using namespace yuzi_os;
 using namespace yuzi_os::common;
@@ -150,12 +151,19 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
     PeripheralComponentInterconnectController PCIController;
     PCIController.SelectDrives(&drvManager, &interrupts);
 
+    VideoGraphicsArray vga;
+
     printf("Initializing Hardware, Stage 2\n");
         drvManager.ActivateAll();
 
     printf("Initializing Hardware, Stage 3\n");
     interrupts.Activate();
 
+    vga.SetMode(320, 200, 8);
+    // draw a blue rectangle
+    for (int32_t y = 0; y < 200; y ++)
+        for (int32_t x = 0; x < 320; x ++)
+            vga.PutPixel(x, y, 0x00, 0x00, 0xA8);
     // InterruptManager interrupts(0x20, &gdt);
     // KeyboardDriver keyboard(&interrupts);
     // interrupts.Activate();
