@@ -11,6 +11,22 @@ namespace yuzi_os
 {
     namespace hardwarecommunication
     {
+
+        enum BaseAddressRegisterType
+        {
+            MemoryMapping = 0,
+            InputOutput = 1
+        };
+
+        class BaseAddressRegister
+        {
+        public:
+            bool prefetchable;
+            yuzi_os::common::uint8_t* address;
+            yuzi_os::common::uint32_t size;
+            BaseAddressRegisterType type;
+        };
+
         class PeripheralComponentInterconnectDeviceDescriptor
         {
         public:
@@ -51,9 +67,13 @@ namespace yuzi_os
             void Write(yuzi_os::common::uint16_t bus, yuzi_os::common::uint16_t device, yuzi_os::common::uint16_t function, yuzi_os::common::uint32_t registeroffset, yuzi_os::common::uint32_t value);
             bool DeviceHasFunctions(yuzi_os::common::uint16_t bus, yuzi_os::common::uint16_t device);
 
-            void SelectDrives(yuzi_os::drivers::DriverManager* driverManager);
+            void SelectDrives(yuzi_os::drivers::DriverManager* driverManager, yuzi_os::hardwarecommunication::InterruptManager* interrupts);
+
+            yuzi_os::drivers::Driver* GetDriver(PeripheralComponentInterconnectDeviceDescriptor dev, yuzi_os::hardwarecommunication::InterruptManager* interrupts);
+           
             PeripheralComponentInterconnectDeviceDescriptor GetDeviceDescriptor(yuzi_os::common::uint16_t bus, yuzi_os::common::uint16_t device, yuzi_os::common::uint16_t function);
 
+            BaseAddressRegister GetBaseAddressRegister(yuzi_os::common::uint16_t bus, yuzi_os::common::uint16_t device, yuzi_os::common::uint16_t function, yuzi_os::common::uint16_t bar);
         };
     }
 }
