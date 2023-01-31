@@ -6,11 +6,16 @@
 #include <drivers/keyboard.h>
 #include <drivers/mouse.h>
 #include <drivers/vga.h>
+#include <gui/desktop.h>
+#include <gui/window.h>
+
+#define GRAPHICSMODE
 
 using namespace yuzi_os;
 using namespace yuzi_os::common;
 using namespace yuzi_os::drivers;
 using namespace yuzi_os::hardwarecommunication;
+using namespace yuzi_os::gui;
 
 void printf(char* str)
 {
@@ -132,6 +137,11 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
 
     // Activate hardware
     printf("Initializing Hardware, Stage 1\n");
+
+    #ifdef GRAPHICSMODE
+        Desktop desktop(320, 200, 0x00, 0x00, 0xA8);
+    #endif
+
     DriverManager drvManager;
 
 
@@ -139,13 +149,21 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
     //drvManager.AddDriver(&keyboard);
     //MouseDriver mouse(&interrupts);
     //drvManager.AddDriver(&mouse);
+    #ifdef GRAPHICSMODE
+        KeyboardDriver keyboard(&interrupts, &desktop);
+    #else
 
-    PrintfKeyboardEventHandler kbhandler;
-    KeyboardDriver keyboard(&interrupts, &kbhandler);
+        PrintfKeyboardEventHandler kbhandler;
+        KeyboardDriver keyboard(&interrupts, &kbhandler);
+    #endif
     drvManager.AddDriver(&keyboard);
 
-    MouseToConsole mousehandler;
-    MouseDriver mouse(&interrupts, &mousehandler);
+    #ifdef GRAPHICSMODE
+        MouseDriver mouse(&interrupts, &desktop);
+    #else
+        MouseToConsole mousehandler;
+        MouseDriver mouse(&interrupts, &mousehandler);
+    #endif
     drvManager.AddDriver(&mouse);
 
     PeripheralComponentInterconnectController PCIController;
@@ -157,16 +175,30 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
         drvManager.ActivateAll();
 
     printf("Initializing Hardware, Stage 3\n");
+
+    #ifdef GRAPHICSMODE
+        vga.SetMode(320,200,8);
+        Window win1(&desktop, 10,10,20,20, 0xA8, 0x00, 0x00);
+        desktop.AddChild(&win1);
+        Window win2(&desktop, 40, 15, 30, 30, 0x00, 0xA8, 0x00);
+        desktop.AddChild(&win2);
+    #endif
+
     interrupts.Activate();
 
-    vga.SetMode(320, 200, 8);
-    // draw a blue rectangle
-    for (int32_t y = 0; y < 200; y ++)
-        for (int32_t x = 0; x < 320; x ++)
-            vga.PutPixel(x, y, 0x00, 0x00, 0xA8);
+    // vga.SetMode(320, 200, 8);
+    // // draw a blue rectangle
+    // for (int32_t y = 0; y < 200; y ++)
+    //     for (int32_t x = 0; x < 320; x ++)
+    //         vga.PutPixel(x, y, 0x00, 0x00, 0xA8);
     // InterruptManager interrupts(0x20, &gdt);
     // KeyboardDriver keyboard(&interrupts);
     // interrupts.Activate();
 
-    while (1);
+    while (1)
+    {
+        #ifdef GRAPHICSMODE
+            desktop.Draw(&vga);
+        #endif
+    }
 }

@@ -76,7 +76,7 @@ void printf(char*);
         {
             if(buffer[1] != 0 || buffer[2] != 0)
             {
-                handler->OnMouseMove(buffer[1], buffer[2]);
+                handler->OnMouseMove((int8_t)buffer[1], -((int8_t)buffer[2]));
             }
 
             
