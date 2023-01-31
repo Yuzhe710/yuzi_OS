@@ -10,7 +10,7 @@
 #include <gui/window.h>
 #include <multitasking.h>
 
-#define GRAPHICSMODE
+// #define GRAPHICSMODE
 
 using namespace yuzi_os;
 using namespace yuzi_os::common;
