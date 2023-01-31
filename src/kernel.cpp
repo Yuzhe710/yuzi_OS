@@ -157,55 +157,55 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
     InterruptManager interrupts(0x20, &gdt, &taskManager);
 
     // Activate hardware
-    // printf("Initializing Hardware, Stage 1\n");
+    printf("Initializing Hardware, Stage 1\n");
 
-    // #ifdef GRAPHICSMODE
-    //     Desktop desktop(320, 200, 0x00, 0x00, 0xA8);
-    // #endif
+    #ifdef GRAPHICSMODE
+        Desktop desktop(320, 200, 0x00, 0x00, 0xA8);
+    #endif
 
-    // DriverManager drvManager;
+    DriverManager drvManager;
 
 
-    // //KeyboardDriver keyboard(&interrupts);
-    // //drvManager.AddDriver(&keyboard);
-    // //MouseDriver mouse(&interrupts);
-    // //drvManager.AddDriver(&mouse);
-    // #ifdef GRAPHICSMODE
-    //     KeyboardDriver keyboard(&interrupts, &desktop);
-    // #else
+    //KeyboardDriver keyboard(&interrupts);
+    //drvManager.AddDriver(&keyboard);
+    //MouseDriver mouse(&interrupts);
+    //drvManager.AddDriver(&mouse);
+    #ifdef GRAPHICSMODE
+        KeyboardDriver keyboard(&interrupts, &desktop);
+    #else
 
-    //     PrintfKeyboardEventHandler kbhandler;
-    //     KeyboardDriver keyboard(&interrupts, &kbhandler);
-    // #endif
-    // drvManager.AddDriver(&keyboard);
+        PrintfKeyboardEventHandler kbhandler;
+        KeyboardDriver keyboard(&interrupts, &kbhandler);
+    #endif
+    drvManager.AddDriver(&keyboard);
 
-    // #ifdef GRAPHICSMODE
-    //     MouseDriver mouse(&interrupts, &desktop);
-    // #else
-    //     MouseToConsole mousehandler;
-    //     MouseDriver mouse(&interrupts, &mousehandler);
-    // #endif
-    // drvManager.AddDriver(&mouse);
+    #ifdef GRAPHICSMODE
+        MouseDriver mouse(&interrupts, &desktop);
+    #else
+        MouseToConsole mousehandler;
+        MouseDriver mouse(&interrupts, &mousehandler);
+    #endif
+    drvManager.AddDriver(&mouse);
 
-    // PeripheralComponentInterconnectController PCIController;
-    // PCIController.SelectDrives(&drvManager, &interrupts);
+    PeripheralComponentInterconnectController PCIController;
+    PCIController.SelectDrives(&drvManager, &interrupts);
 
-    // VideoGraphicsArray vga;
+    VideoGraphicsArray vga;
 
-    // printf("Initializing Hardware, Stage 2\n");
-    //     drvManager.ActivateAll();
+    printf("Initializing Hardware, Stage 2\n");
+        drvManager.ActivateAll();
 
-    // printf("Initializing Hardware, Stage 3\n");
+    printf("Initializing Hardware, Stage 3\n");
 
-    // #ifdef GRAPHICSMODE
-    //     vga.SetMode(320,200,8);
-    //     Window win1(&desktop, 10,10,20,20, 0xA8, 0x00, 0x00);
-    //     desktop.AddChild(&win1);
-    //     Window win2(&desktop, 40, 15, 30, 30, 0x00, 0xA8, 0x00);
-    //     desktop.AddChild(&win2);
-    // #endif
+    #ifdef GRAPHICSMODE
+        vga.SetMode(320,200,8);
+        Window win1(&desktop, 10,10,20,20, 0xA8, 0x00, 0x00);
+        desktop.AddChild(&win1);
+        Window win2(&desktop, 40, 15, 30, 30, 0x00, 0xA8, 0x00);
+        desktop.AddChild(&win2);
+    #endif
 
-    // interrupts.Activate();
+    interrupts.Activate();
 
     // vga.SetMode(320, 200, 8);
     // // draw a blue rectangle
@@ -218,8 +218,8 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
 
     while (1)
     {
-        // #ifdef GRAPHICSMODE
-        //     desktop.Draw(&vga);
-        // #endif
+        #ifdef GRAPHICSMODE
+            desktop.Draw(&vga);
+        #endif
     }
 }

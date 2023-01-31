@@ -181,7 +181,7 @@ uint32_t InterruptManager::DoHandleInterrupt(uint8_t interruptNumber, uint32_t e
     // test with the timer interrupt, which will switch the task
     if (interruptNumber == hardwareInterruptOffset)
     {
-        esp = (uint32_t) taskManager -> Schedule((CPUState*)esp);
+        esp = (uint32_t)taskManager->Schedule((CPUState*)esp);
     }
 
     // hardware interrupts must be acknowledged

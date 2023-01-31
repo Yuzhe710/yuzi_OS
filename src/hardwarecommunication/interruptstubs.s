@@ -92,10 +92,10 @@ int_bottom:
     popl %esi
     popl %edi
     popl %ebp
-    # pop %gs
-    # pop %fs
-    # pop %es
-    # pop %ds
+    # popl %gs
+    # popl %fs
+    # popl %es
+    # popl %ds
     # popa
 
     add $4, %esp
