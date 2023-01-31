@@ -47,12 +47,13 @@ void InterruptManager::SetInterruptDescriptorTableEntry(
     interruptDescriptorTable[interruptNumber].reserved = 0;
 }
 
-InterruptManager::InterruptManager(uint16_t hardwareInterruptOffset, GlobalDescriptorTable* gdt)
+InterruptManager::InterruptManager(uint16_t hardwareInterruptOffset, GlobalDescriptorTable* gdt, TaskManager* taskManager)
 : picMasterCommand(0x20),
   picMasterData(0x21),
   picSlaveCommand(0xA0),
   picSlaveData(0xA1)
 {
+    this->taskManager = taskManager;
     this->hardwareInterruptOffset = hardwareInterruptOffset;
     uint32_t CodeSegment = gdt->CodeSegmentSelector();
     const uint8_t IDT_INTERRUPT_GATE = 0xE;
@@ -175,6 +176,12 @@ uint32_t InterruptManager::DoHandleInterrupt(uint8_t interruptNumber, uint32_t e
         // print unhandled interrupt number
         printf("UNHANDLED INTERRUPT 0x");
         printfHex(interruptNumber);
+    }
+
+    // test with the timer interrupt, which will switch the task
+    if (interruptNumber == hardwareInterruptOffset)
+    {
+        esp = (uint32_t) taskManager -> Schedule((CPUState*)esp);
     }
 
     // hardware interrupts must be acknowledged

@@ -8,6 +8,7 @@
 #include <drivers/vga.h>
 #include <gui/desktop.h>
 #include <gui/window.h>
+#include <multitasking.h>
 
 #define GRAPHICSMODE
 
@@ -116,6 +117,19 @@ public:
 
 };
 
+// for test with multi-tasking
+void taskA()
+{
+    while (true)
+        printf("A");
+}
+
+void taskB()
+{
+    while (true)
+        printf("B");
+}
+
 typedef void (*constructor)();       // define constructor as the function pointer
 extern "C" constructor start_ctors; // start_ctors as pointer to constructor
 extern "C" constructor end_ctors;
@@ -133,7 +147,14 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnuumber)
     printf("Hello World!");
     
     GlobalDescriptorTable gdt;
-    InterruptManager interrupts(0x20, &gdt);
+
+    TaskManager taskManager;
+    Task task1(&gdt, taskA);
+    Task task2(&gdt, taskB);
+    taskManager.AddTask(&task1);
+    taskManager.AddTask(&task2);
+
+    InterruptManager interrupts(0x20, &gdt, &taskManager);
 
     // Activate hardware
     printf("Initializing Hardware, Stage 1\n");

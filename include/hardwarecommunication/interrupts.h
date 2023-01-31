@@ -5,6 +5,7 @@
 #include <common/types.h>
 #include <hardwarecommunication/port.h>
 #include <gdt.h>
+#include <multitasking.h>
 
 namespace yuzi_os
 {
@@ -34,6 +35,7 @@ namespace yuzi_os
 
                 static InterruptManager* ActiveInterruptManager; // a pointer
                 InterruptHandler* handlers[256];
+                TaskManager* taskManager;
 
                 struct GateDescriptor
                 {
@@ -116,7 +118,7 @@ namespace yuzi_os
 
             public:
 
-                InterruptManager(yuzi_os::common::uint16_t hardwareInterruptOffset, GlobalDescriptorTable* gdt);
+                InterruptManager(yuzi_os::common::uint16_t hardwareInterruptOffset, GlobalDescriptorTable* gdt, yuzi_os::TaskManager* taskManager);
                 ~InterruptManager();
 
                 yuzi_os::common::uint16_t HardwareInterruptOffset();

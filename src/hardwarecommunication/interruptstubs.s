@@ -15,6 +15,7 @@ _ZN7yuzi_os21hardwarecommunication16InterruptManager19HandleException\num\()Ev:
 .global _ZN7yuzi_os21hardwarecommunication16InterruptManager26HandleInterruptRequest\num\()Ev 
 _ZN7yuzi_os21hardwarecommunication16InterruptManager26HandleInterruptRequest\num\()Ev:
     movb $\num + IRQ_BASE, (interruptnumber)
+    pushl $0       # push 0 for the error variable in CPUstate struct, 0 is filler for the error code For an exception , the processor pushes an error value automatically but for an interrupt we have to push a value ourselves.
     jmp int_bottom
 .endm
 
@@ -59,23 +60,45 @@ HandleInterruptRequest 0x31
 
 int_bottom: 
 
-    pusha
-    pushl %ds
-    pushl %es
-    pushl %fs
-    pushl %gs
+    # save registers
+    # pusha
+    # pushl %ds
+    # pushl %es
+    # pushl %fs
+    # pushl %gs
 
+    pushl %ebp
+    pushl %edi
+    pushl %esi
+
+    pushl %edx
+    pushl %ecx
+    pushl %ebx
+    pushl %eax
+
+    # call C++ Handler
     pushl %esp
     push (interruptnumber)
     call _ZN7yuzi_os21hardwarecommunication16InterruptManager15HandleInterruptEhj
-    add %esp, 6
-    movl %eax, %esp
+    # add %esp, 6
+    mov %eax, %esp # switch the stack
 
-    pop %gs
-    pop %fs
-    pop %es
-    pop %ds
-    popa
+    # restore registers
+    popl %eax
+    popl %ebx
+    popl %ecx
+    popl %edx
+
+    popl %esi
+    popl %edi
+    popl %ebp
+    # pop %gs
+    # pop %fs
+    # pop %es
+    # pop %ds
+    # popa
+
+    add $4, %esp
 
 .global _ZN7yuzi_os21hardwarecommunication16InterruptManager15InterruptIgnoreEv
 _ZN7yuzi_os21hardwarecommunication16InterruptManager15InterruptIgnoreEv:
